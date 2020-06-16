@@ -11,10 +11,12 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "react": "^16.13.1",
+    "react-amap": "^1.2.8",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "typescript": "~3.7.2"
   },
+  "proxy": "http://39.96.69.24",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
