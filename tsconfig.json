@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "build",
     "target": "es5",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    "experimentalDecorators": true, // 支持装饰器
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

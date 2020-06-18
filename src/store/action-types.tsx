@@ -1,0 +1,4 @@
+export const ADD_NAME = 'ADD_NAME';
+
+export const COUNTER_INCREMENT = 'COUNTER_INCREMENT';
+export const COUNTER_DECREMENT = 'COUNTER_DECREMENT';
