@@ -1,6 +1,15 @@
 import React from 'react';
-import DemoFragmentsA from './DemoFragmentsA';
 
+class DemoFragmentsA extends React.Component<any, any> {
+  render() {
+    return (
+      <>
+        <td>Hello</td>
+        <td>World</td>
+      </>
+    );
+  }
+}
 class DemoFragments extends React.Component<any, any> {
   render() {
     return (
