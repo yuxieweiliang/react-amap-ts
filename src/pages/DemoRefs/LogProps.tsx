@@ -1,4 +1,4 @@
-import React, { Component, ComponentType, ComponentClass, FC } from 'react';
+import React, { ComponentType, FC } from 'react';
 import PropTypes from "prop-types";
 
 export function logProps<P extends FC>(WrappedComponent: ComponentType<P>) {
@@ -19,44 +19,3 @@ export function logProps<P extends FC>(WrappedComponent: ComponentType<P>) {
 
   return LogProps;
 }
-
-
-interface WithLogProps {
-  time: string
-}
-
-function withLog(options: Partial<WithLogProps>) {
-  return <P extends {}>(
-    WrappedComponent: ComponentType<P>
-  ): ComponentClass<any> =>
-    class extends Component<P> {
-      componentDidMount() {
-        const { time } = options
-        console.log(`log ${time}`)
-      }
-      render() {
-        return <WrappedComponent {...this.props} />
-      }
-    }
-}
-function withLogOrig<P extends {}>(Com: ComponentType<P>) {
-  return class extends Component<P> {
-    componentDidMount() {
-      console.log('log')
-    }
-    render() {
-      return <Com {...this.props} />
-    }
-  }
-}
-interface IonicExampleProps {
-  value: string
-}
-interface State {}
-
-class IonicExample extends Component<IonicExampleProps, State> {
-  render() {
-    return <div>'我是被包裹的'</div>
-  }
-}
-export default withLog({ time: '20' })(IonicExample)

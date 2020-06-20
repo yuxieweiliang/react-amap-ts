@@ -31,36 +31,48 @@ class AppMenu extends React.Component<any, any> {
         console.log(this.state)
     }
 
-    createMenuItem (submenu: MenuType) {
+    createMenuItem (item: ItemType) {
+        return (
+          <Item
+            key={item.key}
+            onClick={() => this.onNavigate(item.path)}
+          >
+              { item.title }
+          </Item>
+        )
+    }
+
+    createSubMenu (submenu: MenuType) {
         if (submenu.children) {
             return submenu.children.map(item => {
-                return (
-                  <Item
-                    key={(item as ItemType).key}
-                    onClick={() => this.onNavigate(item.path)}
-                  >
-                      { item.title }
-                  </Item>
-                )
+                return this.createMenuItem(item)
             })
         } else return null
     }
 
     render() {
         const { defaultSelectedKeys, defaultOpenKeys } = this.state
-        console.log(menus)
         return (
-          <Menu theme="light" defaultSelectedKeys={defaultSelectedKeys} defaultOpenKeys={defaultOpenKeys} mode="inline">
+          <Menu
+            theme="light"
+            defaultSelectedKeys={defaultSelectedKeys}
+            defaultOpenKeys={defaultOpenKeys}
+            mode="inline"
+          >
               {
                   menus.map(submenu => {
-                      return (
-                        <SubMenu
-                          key={submenu.key}
-                          title={<span><UserOutlined/><span>{ submenu.title }</span></span>}
-                        >
-                            { this.createMenuItem(submenu) }
-                        </SubMenu>
-                      )
+                      if (submenu.type === 'item') {
+                          return this.createMenuItem(submenu as ItemType)
+                      } else {
+                          return (
+                            <SubMenu
+                              key={submenu.key}
+                              title={<span><UserOutlined/><span>{ submenu.title }</span></span>}
+                            >
+                                { this.createSubMenu(submenu) }
+                            </SubMenu>
+                          )
+                      }
                   })
               }
           </Menu>

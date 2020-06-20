@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Requireable } from 'react';
 import { Button, Input } from 'antd';
 import { logProps } from './LogProps'
 
@@ -15,11 +15,11 @@ class DemoRefsB extends React.Component {
   }
 }
 
+const initialState = { data: undefined }
+
 // 引用传递。
 class DemoRefs extends React.Component<any, any> {
-  state = {
-    data: undefined
-  }
+  state = initialState
 
   public textInput: React.RefObject<Input> = React.createRef();
 
@@ -32,6 +32,13 @@ class DemoRefs extends React.Component<any, any> {
   };
 
   public onFocusAClick = () => {
+
+    this.setState((state: { data: string; }) => {
+      return {
+        data: state.data + 'string'
+      }
+    })
+
     if (this.textInputA.current) {
       this.textInputA.current.focus();
     }
@@ -50,7 +57,7 @@ class DemoRefs extends React.Component<any, any> {
         <Button onClick={this.onFocusAClick}>点击获取子组件A的焦点</Button>
         <DemoRefsA ref={this.textInputA}/>
         {/* todo 在高阶组件中转发refs */}
-        <DemoRefsBWidthLog options={this.state.data}/>
+        <DemoRefsBWidthLog {...{option: this.state.data}}/>
 
       </div>
     );
