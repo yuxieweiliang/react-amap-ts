@@ -4,7 +4,7 @@ import { LogoutOutlined, ExclamationCircleOutlined, } from '@ant-design/icons';
 import ajax from '../../utils/ajax';
 import './AppHeader.css';
 
-const {Header} = Layout;
+const { Header } = Layout;
 
 class AppHeader extends React.Component <any, any> {
 
