@@ -2,10 +2,10 @@ import React from 'react';
 import { Menu } from 'antd';
 import {
     UserOutlined,
-    DesktopOutlined,
+    // DesktopOutlined,
 } from '@ant-design/icons';
 import { withRouter } from 'react-router';
-import { menus, routes, isMenu, MenuType, ItemType } from '../../config/routes'
+import { menus, routes, MenuType, ItemType } from '../../config/routes'
 
 const {SubMenu, Item} = Menu;
 

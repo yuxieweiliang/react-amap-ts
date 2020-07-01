@@ -1,3 +1,7 @@
+export const APP_LOGIN = 'APP_LOGIN/login';
+export const SET_USER = 'COMMON/SET_USER';
+export const SET_ROLE = 'COMMON/SET_ROLE';
+
 export const ADD_NAME = 'ADD_NAME';
 
 export const COUNTER_INCREMENT = 'COUNTER_INCREMENT';

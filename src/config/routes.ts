@@ -1,4 +1,31 @@
 import { lazy } from 'react'
+import {func} from "prop-types";
+
+const ContextPath = '/src/pages/demo-component/Context'
+
+export interface ItemType {
+    key?: string;
+    title?: string;
+    type: string;
+    path: string;
+    component: any;
+}
+export interface MenuType {
+    key?: string;
+    title: string,
+    type: string,
+    children?: ItemType[]
+}
+
+function isItem(pet: ItemType | MenuType): pet is ItemType {
+    return (pet as ItemType).type === 'item';
+}
+
+export function isMenu(pet: ItemType | MenuType): pet is MenuType {
+    return (pet as MenuType).type === 'submenu';
+}
+
+// @ts-ignore
 export const menus = [
     {
         title: 'Welcome',
@@ -106,28 +133,10 @@ export const menus = [
     })
 })
 
-export interface ItemType {
-    key?: string;
-    title?: string;
-    type: string;
-    path: string;
-    component: any;
+function mixinItemKey(item: ItemType, index: number, idx: number) {
+    return ({...item, key: `${index + 1}-${idx + 1}`})
 }
 
-export interface MenuType {
-    key?: string;
-    title: string,
-    type: string,
-    children?: ItemType[]
-}
-
-function isItem(pet: ItemType | MenuType): pet is ItemType {
-    return (pet as ItemType).type === 'item';
-}
-
-export function isMenu(pet: ItemType | MenuType): pet is MenuType {
-    return (pet as MenuType).type === 'submenu';
-}
 function filter(menus: ItemType[] | MenuType[]): ItemType[] {
     const _menus: ItemType[] = []
 
@@ -148,55 +157,7 @@ function filter(menus: ItemType[] | MenuType[]): ItemType[] {
     return _menus
 }
 
+console.log(menus)
+
 export const routes = filter(menus)
-console.log(routes)
-export default {
-    provider: {
-        path: '/demo-provider',
-        component: lazy(() => import('../pages/demo-component/Context'))
-    },
-    refs: {
-        path: '/demo-refs',
-        component: lazy(() => import('../pages/Welcome/Welcome'))
-    },
-    fragments: {
-        path: '/demo-fragments',
-        component: lazy(() => import('../pages/demo-component/DemoFragments'))
-    },
-    portals: {
-        path: '/demo-portals',
-        component: lazy(() => import('../pages/DemoPortals/DemoPortals'))
-    },
-    hook: {
-        path: '/demo-hook',
-        component: lazy(() => import('../pages/DemoHook/DemoHook'))
-    },
-    redux: {
-        path: '/demo-redux',
-        component: lazy(() => import('../pages/DemoRedux/DemoRedux'))
-    },
-    counter: {
-        path: '/demo-counter',
-        component: lazy(() => import('../pages/DemoRedux/DemoCounter'))
-    },
-    mobx: {
-        path: '/demo-mobx',
-        component: lazy(() => import('../pages/DemoMobx/DemoMobx'))
-    },
-    computed: {
-        path: '/demo-computed',
-        component: lazy(() => import('../pages/DemoMobx/Computed'))
-    },
-    autorun: {
-        path: '/demo-autorun',
-        component: lazy(() => import('../pages/DemoMobx/Autorun'))
-    },
-    color: {
-        path: '/demo-color',
-        component: lazy(() => import('../pages/DemoMobx/Color'))
-    },
-    action: {
-        path: '/demo-action',
-        component: lazy(() => import('../pages/DemoMobx/Action'))
-    },
-}
+
