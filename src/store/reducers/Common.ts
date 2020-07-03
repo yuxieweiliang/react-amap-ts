@@ -1,4 +1,16 @@
-import { SET_ROLE, SET_USER, SET_MENU } from '../action-types';
+import {SET_ROLE, SET_USER, SET_MENU, SET_LOGIN} from '../action-types';
+
+/**
+ * 登录状态
+ */
+export function isLogin(state: boolean = false, action: any) {
+  switch (action.type) {
+    case SET_LOGIN:
+      return !!action.payload
+    default:
+      return state;
+  }
+}
 
 const initialUser = {
   username: null,
@@ -8,7 +20,7 @@ const initialUser = {
 /**
  * 用户数据
  */
-function user(state: any = initialUser, action: any) {
+export function user(state: any = initialUser, action: any) {
   switch (action.type) {
     case SET_USER:
       return Object.assign(state, action.payload);
@@ -25,7 +37,7 @@ const initialRole = {
 /**
  * 权限数据
  */
-function role(state: any = initialRole, action: any) {
+export function role(state: any = initialRole, action: any) {
   switch (action.type) {
     case SET_ROLE:
       return Object.assign(state, action.payload);
@@ -34,7 +46,7 @@ function role(state: any = initialRole, action: any) {
   }
 }
 
-const initialMenu = {
+const initialAuth = {
   auth: null,
   describe: null,
   permissions: [],
@@ -42,17 +54,11 @@ const initialMenu = {
 /**
  * 权限数据
  */
-function menu(state: any = initialMenu, action: any) {
+export function auto(state: any = initialAuth, action: any) {
   switch (action.type) {
     case SET_MENU:
       return Object.assign(state, action.payload);
     default:
       return state;
   }
-}
-
-export default {
-  user,
-  role,
-  menu
 }

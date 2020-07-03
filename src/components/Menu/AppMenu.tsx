@@ -63,31 +63,34 @@ class AppMenu extends React.Component<any, any> {
         const menus = this.props.menus
         console.log(menus)
 
-        return (
-          <Menu
-            theme="light"
-            defaultSelectedKeys={defaultSelectedKeys}
-            defaultOpenKeys={defaultOpenKeys}
-            mode="inline"
-          >
-              {
-                  menus.map((submenu:MenuType) => {
-                      if (submenu.type === 'item') {
-                          return this.createMenuItem(submenu as ItemType)
-                      } else {
-                          return (
-                            <SubMenu
-                              key={submenu.id}
-                              title={<span><UserOutlined/><span>{ submenu.title }</span></span>}
-                            >
-                                { this.createSubMenu(submenu) }
-                            </SubMenu>
-                          )
-                      }
-                  })
-              }
-          </Menu>
-        );
+        if (menus && menus.length) {
+            return (
+              <Menu
+                theme="light"
+                defaultSelectedKeys={defaultSelectedKeys}
+                defaultOpenKeys={defaultOpenKeys}
+                mode="inline"
+              >
+                  {
+                      menus.map((submenu:MenuType) => {
+                          if (submenu.type === 'item') {
+                              return this.createMenuItem(submenu as ItemType)
+                          } else {
+                              return (
+                                <SubMenu
+                                  key={submenu.id}
+                                  title={<span><UserOutlined/><span>{ submenu.title }</span></span>}
+                                >
+                                    { this.createSubMenu(submenu) }
+                                </SubMenu>
+                              )
+                          }
+                      })
+                  }
+              </Menu>
+            );
+        } else return null
+
     }
 }
 

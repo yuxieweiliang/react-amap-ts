@@ -6,7 +6,8 @@ import App from './App'
 import { Provider } from 'react-redux'
 import store from './store'
 import action from './store/actions/Common'
-import { isMenu, isItem, ItemType } from './config/routes'
+import actions from "./store/actions/Common";
+import ajax from "./utils/ajax";
 
 type IRoute = {
   path: string,
@@ -17,39 +18,29 @@ type IRoute = {
   subRoutes?: Array<IRoute>
 }
 
-fetch('http://localhost:3000/role/as').then(res => res.json()).then(res => {
-  const { role, menu, ...user } = res.result
-  const menus: {[propName: string]: any} = {}
-
-  store.dispatch(action.setUser(user))
-  store.dispatch(action.setRole(role))
-
-  if (menu && menu.length > 0) {
-    for (const item of menu) {
-
-      if ((isMenu(item) || isItem(item)) && !item.parent && item.id) {
-        menus[item.id] = Object.assign(menus[item.id] || {children: []}, item)
-      } else {
-        if (!menus[item.parent]) {
-          menus[item.parent] = {
-            children: []
-          }
-        }
-        menus[item.parent].children.push(item)
-      }
+function initialApp (cb: {  (routes: any, menus: any): void }) {
+  store.dispatch(actions.initial())
+  ajax.requestMenu().then(state => {
+    if (state) {
+      const { role, routes, user, menus } = state
+      store.dispatch(action.setUser(user))
+      store.dispatch(action.setRole(role))
+      cb(routes, menus)
+    } else {
+      cb([], {})
     }
-  }
+  })
+}
 
-  if (res.code === 200) {
-    ReactDOM.render(
-      <Provider store={store}>
-        <App routes={menu} menus={Object.values(menus)}/>
-      </Provider>,
-      document.getElementById('root')
-    );
-  }
+
+initialApp((routes: any, menus: {[propName: string]: any} = {}) => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <App routes={routes} menus={Object.values(menus)}/>
+    </Provider>,
+    document.getElementById('root')
+  );
 })
-
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

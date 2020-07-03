@@ -3,7 +3,8 @@ import { Form, Input, Button, Checkbox, message } from 'antd';
 import './Login.css';
 import { RouteComponentProps } from 'react-router';
 import ajax from '../../utils/ajax';
-import {Redirect} from "react-router-dom";
+import { connect } from 'react-redux'
+import actions from '../../store/actions/Common'
 
 interface LoginProps extends RouteComponentProps {}
 
@@ -15,15 +16,25 @@ const tailLayout = {
   wrapperCol: {offset: 8, span: 16},
 };
 
-export default class Login extends React.Component <any, any> {
+class Login extends React.Component <any, any> {
+
+  // public tryingLogin: boolean = true;
 
   public onFinish = (values: any) => {
     console.log('Success:', values);
     const hide = message.loading('正在登录...');
     ajax.requestLogin(values.username, values.password).then(() => {
       hide();
+      this.props.dispatch(actions.setLogin(true))
       this.props.history.push('/index');
     });
+    /*if (this.tryingLogin && window.location.pathname !== '/login') {
+      const hide = message.loading('加载中...');
+      ajax.requestUser().then(state => {
+        hide();
+        this.setState({isLogin: state});
+      })
+    }*/
   };
 
   public onFinishFailed = (errorInfo: any) => {
@@ -31,9 +42,7 @@ export default class Login extends React.Component <any, any> {
   };
 
   render() {
-    if (window.location.pathname === '/logxxxxin') {
-      return <Redirect to={'/demo-Welcome'}/>
-    }
+    console.log(this.props)
     return (
         <Form
             {...layout}
@@ -73,3 +82,4 @@ export default class Login extends React.Component <any, any> {
   }
 }
 
+export default connect()(Login)

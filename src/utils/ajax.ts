@@ -1,9 +1,11 @@
+import {isItem, isMenu} from "../config/routes";
+
 class Ajax {
-  public requestLogin(username: string, password: string): Promise<string> {
+  public requestLogin(username: string, password: string): Promise<object> {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(username);
-      }, 3000);
+        resolve({username, password});
+      }, 1000);
     });
   }
 
@@ -13,7 +15,7 @@ class Ajax {
         const currentTime = new Date().getTime();
         const isLogin = currentTime / 2 === Math.round(currentTime / 2);
         resolve(isLogin);
-      }, 3000);
+      }, 1000);
     });
   }
 
@@ -21,8 +23,43 @@ class Ajax {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve();
-      }, 3000);
+      }, 1000);
     });
+  }
+
+  public requestMenu():Promise<any> {
+    return fetch('http://localhost:3000/role/menu').then(res => res.json()).then(res => {
+      const { role, routes, ...user } = res.result
+      const menus: {[propName: string]: any} = {}
+
+      if (routes && routes.length > 0) {
+        for (const item of routes) {
+
+          if ((isMenu(item) || isItem(item)) && !item.parent && item.id) {
+            menus[item.id] = Object.assign(menus[item.id] || {children: []}, item)
+          } else {
+            if (!menus[item.parent]) {
+              menus[item.parent] = {
+                children: []
+              }
+            }
+            menus[item.parent].children.push(item)
+          }
+        }
+      }
+
+      if (res.code === 200) {
+        return {
+          user,
+          role,
+          routes,
+          menus,
+        }
+      } else {
+        return false
+      }
+    })
+
   }
 }
 

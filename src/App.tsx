@@ -2,12 +2,12 @@ import React, { Suspense } from 'react';
 import { Provider } from 'mobx-react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
-import { Layout, message } from 'antd';
+import { Layout } from 'antd';
 import { routesConfig, ItemType } from './config/routes'
 import './App.css';
 import 'antd/dist/antd.css';
-import ajax from './utils/ajax'
 import Login from './pages/Login/Login'
+import actions from './store/actions/Common'
 
 import AppHeader from './components/Header/AppHeader';
 import AppMenu from './components/Menu/AppMenu';
@@ -46,17 +46,7 @@ class App extends React.Component<any, AppStates> {
     display: window.location.pathname === '/login' ? 'none': undefined,
   };
 
-  public tryingLogin: boolean = true;
-
-  public componentDidMount() {
-    if (this.tryingLogin && window.location.pathname !== '/login') {
-      const hide = message.loading('加载中...');
-      ajax.requestUser().then(state => {
-        hide();
-        this.setState({isLogin: state});
-      })
-    }
-  }
+  public componentDidMount() {}
 
   render() {
     const { routes } = this.props
@@ -75,7 +65,9 @@ class App extends React.Component<any, AppStates> {
             path="/"
             render={() => {
 
-              if (!this.state.isLogin && window.location.pathname !== '/login') {
+              console.log('xxxxxxxxxxxxxxxx')
+              console.log(!!this.props.isLogin, routes)
+              if (!this.props.isLogin && window.location.pathname !== '/login') {
                 return <Redirect to={'/login'}/>
               }
 
@@ -89,7 +81,7 @@ class App extends React.Component<any, AppStates> {
                     <Suspense fallback={<div>Loading...</div>}>
                       <Layout className="main-layout">
                         {
-                          routesConfig.map((item: ItemType) => {
+                          routes && !!routes.length && routesConfig.map((item: ItemType) => {
                             if (item.path && item.component) {
                               return (
                                 <Route
@@ -113,6 +105,7 @@ class App extends React.Component<any, AppStates> {
                   </Layout>
                 </Layout>
               </div>)
+
             }}
           />
         </BrowserRouter>
