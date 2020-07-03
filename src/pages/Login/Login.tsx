@@ -3,9 +3,9 @@ import { Form, Input, Button, Checkbox, message } from 'antd';
 import './Login.css';
 import { RouteComponentProps } from 'react-router';
 import ajax from '../../utils/ajax';
+import {Redirect} from "react-router-dom";
 
-interface LoginProps extends RouteComponentProps {
-}
+interface LoginProps extends RouteComponentProps {}
 
 const layout = {
   labelCol: {span: 8},
@@ -15,7 +15,7 @@ const tailLayout = {
   wrapperCol: {offset: 8, span: 16},
 };
 
-export default class Login extends React.Component <LoginProps, any> {
+export default class Login extends React.Component <any, any> {
 
   public onFinish = (values: any) => {
     console.log('Success:', values);
@@ -31,6 +31,9 @@ export default class Login extends React.Component <LoginProps, any> {
   };
 
   render() {
+    if (window.location.pathname === '/logxxxxin') {
+      return <Redirect to={'/demo-Welcome'}/>
+    }
     return (
         <Form
             {...layout}

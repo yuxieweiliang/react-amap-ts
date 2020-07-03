@@ -36,51 +36,42 @@ interface AppStates {
   /*isLogin: boolean;
   menus: object[];*/
   isLogin: Boolean;
-  display: string | undefined;
 }
 
 class App extends React.Component<any, AppStates> {
 
   public state: AppStates = {
     isLogin: false,
-    display: window.location.pathname === '/login' ? 'none': undefined,
   };
 
   public tryingLogin: boolean = true;
 
   public componentDidMount() {
-    if (this.tryingLogin && window.location.pathname !== '/login') {
+    /*if (this.tryingLogin) {
       const hide = message.loading('加载中...');
       ajax.requestUser().then(state => {
         hide();
         this.setState({isLogin: state});
       })
-    }
+    }*/
   }
 
   render() {
     const { routes } = this.props
     const cacheRoutePaths = (routes as ItemType[]).map((item) => item.path)
 
+    console.log(!this.state.isLogin && window.location.pathname !== '/login')
     return (
       <Provider {...stores}>
         <BrowserRouter>
-          <Route
-            key="login"
-            path="/login"
-            component={Login}
-          />
-          <Route
-            key="index"
-            path="/"
-            render={() => {
 
-              if (!this.state.isLogin && window.location.pathname !== '/login') {
-                return <Redirect to={'/login'}/>
-              }
-
-              return (<div>
-                <Layout style={{height: '100vh', display: this.state.display }}>
+          
+          <div>
+            {
+              (!this.state.isLogin && window.location.pathname !== '/login') ? (
+                <Login/>
+                ) : (
+                <Layout style={{height: '100vh'}}>
                   <AppHeader/>
                   <Layout>
                     <Sider width={201} theme="light">
@@ -88,33 +79,37 @@ class App extends React.Component<any, AppStates> {
                     </Sider>
                     <Suspense fallback={<div>Loading...</div>}>
                       <Layout className="main-layout">
-                        {
-                          routesConfig.map((item: ItemType) => {
-                            if (item.path && item.component) {
-                              return (
-                                <Route
-                                  key={item.path}
-                                  path={item.path}
-                                  component={({ location }: any) => {
-                                    const Comp = item.component
-                                    if (cacheRoutePaths.includes(location.pathname)) {
-                                      return <Comp/>
-                                    } else {
-                                      return <Redirect to={'/demo-Welcome'}/>
-                                    }
-                                  }}
-                                />
-                              )
-                            } else return null
-                          })
-                        }
+                          {
+                            routesConfig.map((item: ItemType) => {
+                              if (item.path && item.component) {
+                                return (
+                                  <Route
+                                    key={item.path}
+                                    path={item.path}
+                                    component={({ location, history }: any) => {
+                                      const Comp = item.component
+                                      if (cacheRoutePaths.includes(location.pathname)) {
+                                        return <Comp/>
+                                      } else {
+                                        // history.push('/')
+                                        return null
+                                      }
+                                    }}
+                                  />
+                                )
+                              } else return null
+                            })
+                          }
+                          <Redirect to={'/demo-Welcome'}/>
                       </Layout>
                     </Suspense>
                   </Layout>
                 </Layout>
-              </div>)
-            }}
-          />
+              )
+            }
+          </div>
+
+
         </BrowserRouter>
       </Provider>
     );

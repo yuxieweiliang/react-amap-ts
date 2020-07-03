@@ -1,5 +1,4 @@
-import React, { lazy } from 'react'
-import { widthPermission } from '../pages/DemoRedux/widthPermission';
+import { lazy } from 'react'
 
 export interface ItemType {
     id: string;
@@ -28,7 +27,14 @@ export function isMenu(pet: ItemType | MenuType): pet is MenuType {
 }
 
 // @ts-ignore
-export const menus = [
+const menus = [
+    /*{
+        id: 'xxxsxsxxx',
+        title: 'login',
+        type: 'item',
+        path: '/login',
+        component: lazy(() => import('../pages/Login/Login'))
+    },*/
     {
         id: 'xxxxxxx',
         title: 'Welcome',
@@ -158,10 +164,6 @@ export const menus = [
     })
 })
 
-/*function mixinItemKey(item: ItemType, index: number, idx: number) {
-    return ({...item, key: `${index + 1}-${idx + 1}`})
-}*/
-
 export function filter(menus: ItemType[] | MenuType[]): ItemType[] {
     const _menus: ItemType[] = []
 
@@ -181,8 +183,6 @@ export function filter(menus: ItemType[] | MenuType[]): ItemType[] {
 
     return _menus
 }
-
-console.log(menus)
 
 export const routesConfig = filter(menus)
 

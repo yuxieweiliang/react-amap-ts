@@ -43,7 +43,7 @@ fetch('http://localhost:3000/role/as').then(res => res.json()).then(res => {
   if (res.code === 200) {
     ReactDOM.render(
       <Provider store={store}>
-        <App routes={menu.map((item: ItemType) => item.path)} menus={Object.values(menus)}/>
+        <App routes={menu} menus={Object.values(menus)}/>
       </Provider>,
       document.getElementById('root')
     );

@@ -5,20 +5,22 @@ import {
     // DesktopOutlined,
 } from '@ant-design/icons'
 import { Link } from "react-router-dom";
-import { withRouter } from 'react-router'
+import { withRouter, StaticRouterProps } from 'react-router'
 import { MenuType, ItemType } from '../../config/routes'
 
 const {SubMenu, Item} = Menu
 
 type menuProps = {
-
+    location: StaticRouterProps
+    routes: ItemType[]
+    menus: MenuType[]
 }
 
 class AppMenu extends React.Component<any, any> {
 
-    public onNavigate = (path: string) => {
+    /*public onNavigate = (path: string) => {
         this.props.history.push(path);
-    };
+    };*/
 
     constructor(props: any) {
         super(props);
@@ -31,10 +33,10 @@ class AppMenu extends React.Component<any, any> {
             defaultOpenKeys: []
         }
 
-        if (item && item.key) {
-            console.log(item.key.split('-')[0], item.key)
-            this.state.defaultSelectedKeys.push(item.key.split('-')[0], item.key)
-            this.state.defaultOpenKeys.push(item.key.split('-')[0], item.key)
+        if (item && item.id) {
+            console.log(item)
+            this.state.defaultSelectedKeys.push(item.parent, item.id)
+            this.state.defaultOpenKeys.push(item.parent, item.id)
         }
     }
 
@@ -59,6 +61,7 @@ class AppMenu extends React.Component<any, any> {
     render() {
         const { defaultSelectedKeys, defaultOpenKeys } = this.state
         const menus = this.props.menus
+        console.log(menus)
 
         return (
           <Menu
