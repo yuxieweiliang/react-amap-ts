@@ -1,9 +1,9 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import colors from '../../mobx-stores/colors';
+// import colors from '../../mobx-stores/colors';
 import { Select } from 'antd';
 
-const {Option} = Select;
+const { Option } = Select;
 
 interface ColorProps {
   colors: any;
@@ -19,6 +19,7 @@ class Color extends React.Component<ColorProps> {
 
   render() {
     const {bgColor, fontColor} = this.props.colors;
+    // console.log(colors)
     return (
         <div>
           <Select style={{width:'200px'}} onChange={this.onChangeColor} placeholder="请选择背景色">

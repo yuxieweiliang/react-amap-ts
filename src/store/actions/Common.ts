@@ -1,4 +1,4 @@
-import { SET_USER, SET_ROLE } from '../action-types';
+import { SET_USER, SET_ROLE, SET_MENU } from '../action-types';
 
 export default {
   setUser(data: any) {
@@ -6,5 +6,8 @@ export default {
   },
   setRole(data: any) {
     return { type: SET_ROLE, payload: data };
-  }
+  },
+  setMenu(data: any) {
+    return { type: SET_MENU, payload: data };
+  },
 };

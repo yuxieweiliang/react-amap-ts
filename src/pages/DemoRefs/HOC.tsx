@@ -40,6 +40,7 @@ function withLog(options: Partial<WithLogProps>) {
     }
 }
 function withLogOrig<P extends {}>(Com: ComponentType<P>) {
+
   return class extends Component<P> {
     componentDidMount() {
       console.log('log')
@@ -48,6 +49,7 @@ function withLogOrig<P extends {}>(Com: ComponentType<P>) {
       return <Com {...this.props} />
     }
   }
+
 }
 interface IonicExampleProps {
   value: string

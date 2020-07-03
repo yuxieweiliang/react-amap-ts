@@ -1,9 +1,9 @@
-import { lazy } from 'react'
-import {func} from "prop-types";
-
-const ContextPath = '/src/pages/demo-component/Context'
+import React, { lazy } from 'react'
+import { widthPermission } from '../pages/DemoRedux/widthPermission';
 
 export interface ItemType {
+    id: string;
+    parent?: string;
     key?: string;
     title?: string;
     type: string;
@@ -11,13 +11,15 @@ export interface ItemType {
     component: any;
 }
 export interface MenuType {
+    id: string;
+    parent?: string;
     key?: string;
     title: string,
     type: string,
     children?: ItemType[]
 }
 
-function isItem(pet: ItemType | MenuType): pet is ItemType {
+export function isItem(pet: ItemType | MenuType): pet is ItemType {
     return (pet as ItemType).type === 'item';
 }
 
@@ -28,40 +30,54 @@ export function isMenu(pet: ItemType | MenuType): pet is MenuType {
 // @ts-ignore
 export const menus = [
     {
+        id: 'xxxxxxx',
         title: 'Welcome',
         type: 'item',
         path: '/demo-Welcome',
         component: lazy(() => import('../pages/Welcome/Welcome'))
     },
     {
+        id: 'xxxxxxx',
         title: 'demo',
         type: 'submenu',
         children: [
             {
+                id: 'xxxxxxx',
                 title: 'provider',
                 type: 'item',
                 path: '/demo-provider',
                 component: lazy(() => import('../pages/demo-component/Context'))
             },
             {
+                id: 'xxxxxxx',
                 title: 'refs',
                 type: 'item',
                 path: '/demo-refs',
                 component: lazy(() => import('../pages/DemoRefs/DemoRefs'))
             },
             {
+                id: 'xxxxxxx',
+                title: 'refs',
+                type: 'item',
+                path: '/demo-hoc',
+                component: lazy(() => import('../pages/DemoRefs/HOC'))
+            },
+            {
+                id: 'xxxxxxx',
                 title: 'fragments',
                 type: 'item',
                 path: '/demo-fragments',
                 component: lazy(() => import('../pages/demo-component/DemoFragments'))
             },
             {
+                id: 'xxxxxxx',
                 title: 'portals',
                 path: '/demo-portals',
                 type: 'item',
                 component: lazy(() => import('../pages/DemoPortals/DemoPortals'))
             },
             {
+                id: 'xxxxxxx',
                 title: 'hook',
                 path: '/demo-hook',
                 type: 'item',
@@ -70,16 +86,19 @@ export const menus = [
         ]
     },
     {
+        id: 'xxxxxxx',
         title: 'Redux',
         type: 'submenu',
         children: [
             {
+                id: 'xxxxxxx',
                 title: 'redux',
                 path: '/demo-redux',
                 type: 'item',
                 component: lazy(() => import('../pages/DemoRedux/DemoRedux'))
             },
             {
+                id: 'xxxxxxx',
                 title: 'counter',
                 path: '/demo-counter',
                 type: 'item',
@@ -88,34 +107,40 @@ export const menus = [
         ]
     },
     {
+        id: 'xxxxxxx',
         title: 'Redux',
         type: 'submenu',
         children: [
             {
+                id: 'xxxxxxx',
                 title: 'mobx',
                 path: '/demo-mobx',
                 type: 'item',
                 component: lazy(() => import('../pages/DemoMobx/DemoMobx'))
             },
             {
+                id: 'xxxxxxx',
                 title: 'computed',
                 path: '/demo-computed',
                 type: 'item',
                 component: lazy(() => import('../pages/DemoMobx/Computed'))
             },
             {
+                id: 'xxxxxxx',
                 title: 'autorun',
                 path: '/demo-autorun',
                 type: 'item',
                 component: lazy(() => import('../pages/DemoMobx/Autorun'))
             },
             {
+                id: 'xxxxxxx',
                 title: 'color',
                 path: '/demo-color',
                 type: 'item',
                 component: lazy(() => import('../pages/DemoMobx/Color'))
             },
             {
+                id: 'xxxxxxx',
                 title: 'action',
                 path: '/demo-action',
                 type: 'item',
@@ -133,11 +158,11 @@ export const menus = [
     })
 })
 
-function mixinItemKey(item: ItemType, index: number, idx: number) {
+/*function mixinItemKey(item: ItemType, index: number, idx: number) {
     return ({...item, key: `${index + 1}-${idx + 1}`})
-}
+}*/
 
-function filter(menus: ItemType[] | MenuType[]): ItemType[] {
+export function filter(menus: ItemType[] | MenuType[]): ItemType[] {
     const _menus: ItemType[] = []
 
     if (menus && menus.length) {
@@ -159,5 +184,5 @@ function filter(menus: ItemType[] | MenuType[]): ItemType[] {
 
 console.log(menus)
 
-export const routes = filter(menus)
+export const routesConfig = filter(menus)
 

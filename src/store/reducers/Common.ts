@@ -1,4 +1,4 @@
-import { SET_ROLE, SET_USER } from '../action-types';
+import { SET_ROLE, SET_USER, SET_MENU } from '../action-types';
 
 const initialUser = {
   username: null,
@@ -34,7 +34,25 @@ function role(state: any = initialRole, action: any) {
   }
 }
 
+const initialMenu = {
+  auth: null,
+  describe: null,
+  permissions: [],
+};
+/**
+ * 权限数据
+ */
+function menu(state: any = initialMenu, action: any) {
+  switch (action.type) {
+    case SET_MENU:
+      return Object.assign(state, action.payload);
+    default:
+      return state;
+  }
+}
+
 export default {
   user,
-  role
+  role,
+  menu
 }

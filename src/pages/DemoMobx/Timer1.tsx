@@ -1,6 +1,6 @@
 import React from 'react';
 import { observable } from 'mobx';
-import { interval } from 'rxjs/index';
+import { interval } from 'rxjs';
 import { observer } from 'mobx-react';
 
 @observer

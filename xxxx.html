@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  class TodoStore {
+    todos = [];
+
+    /**
+     * 计算 TODO 的次数
+     * @returns {number}
+     */
+    get completedTodosCount() {
+      return this.todos.filter(
+        todo => todo.completed === true
+      ).length;
+    }
+
+    /**
+     * 报告 执行 结果
+     * @returns {string}
+     */
+    report() {
+      if (this.todos.length === 0)
+        return "<none>";
+      const nextTodo = this.todos.find(todo => todo.completed === false);
+      return `Next todo: "${nextTodo ? nextTodo.task : "<none>"}". ` +
+        `Progress: ${this.completedTodosCount}/${this.todos.length}`;
+    }
+
+    /**
+     * 添加栈
+     * @param task
+     */
+    addTodo(task) {
+      this.todos.push({
+        task: task,
+        completed: false,
+        assignee: null
+      });
+    }
+  }
+
+  const todoStore = new TodoStore();
+  console.log(todoStore.report());
+  todoStore.addTodo("read MobX tutorial");
+  console.log(todoStore.report());
+
+  todoStore.addTodo("try MobX");
+  console.log(todoStore.report());
+
+  todoStore.todos[0].completed = true;
+  console.log(todoStore.report());
+
+  todoStore.todos[1].task = "try MobX in own project";
+  console.log(todoStore.report());
+
+  todoStore.todos[0].task = "grok MobX tutorial";
+  console.log(todoStore.report());
+</script>
+</body>
+</html>

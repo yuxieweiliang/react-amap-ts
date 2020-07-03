@@ -1,22 +1,30 @@
-import React from 'react';
-import { Menu } from 'antd';
+import React from 'react'
+import { Menu } from 'antd'
 import {
     UserOutlined,
     // DesktopOutlined,
-} from '@ant-design/icons';
-import { withRouter } from 'react-router';
-import { menus, routes, MenuType, ItemType } from '../../config/routes'
+} from '@ant-design/icons'
+import { Link } from "react-router-dom";
+import { withRouter } from 'react-router'
+import { MenuType, ItemType } from '../../config/routes'
 
-const {SubMenu, Item} = Menu;
+const {SubMenu, Item} = Menu
+
+type menuProps = {
+
+}
 
 class AppMenu extends React.Component<any, any> {
 
     public onNavigate = (path: string) => {
         this.props.history.push(path);
     };
+
     constructor(props: any) {
         super(props);
-        const item: ItemType | undefined = routes.find(item => item.path === this.props.location.pathname)
+        const routes = props.routes
+
+        const item: ItemType | undefined = routes.find((item: ItemType) => item.path === this.props.location.pathname)
 
         this.state = {
             defaultSelectedKeys: [],
@@ -28,16 +36,14 @@ class AppMenu extends React.Component<any, any> {
             this.state.defaultSelectedKeys.push(item.key.split('-')[0], item.key)
             this.state.defaultOpenKeys.push(item.key.split('-')[0], item.key)
         }
-        console.log(this.state)
     }
 
     createMenuItem (item: ItemType) {
         return (
           <Item
-            key={item.key}
-            onClick={() => this.onNavigate(item.path)}
+            key={item.id}
           >
-              { item.title }
+              <Link to={item.path}>{ item.title }</Link>
           </Item>
         )
     }
@@ -52,6 +58,8 @@ class AppMenu extends React.Component<any, any> {
 
     render() {
         const { defaultSelectedKeys, defaultOpenKeys } = this.state
+        const menus = this.props.menus
+
         return (
           <Menu
             theme="light"
@@ -60,13 +68,13 @@ class AppMenu extends React.Component<any, any> {
             mode="inline"
           >
               {
-                  menus.map(submenu => {
+                  menus.map((submenu:MenuType) => {
                       if (submenu.type === 'item') {
                           return this.createMenuItem(submenu as ItemType)
                       } else {
                           return (
                             <SubMenu
-                              key={submenu.key}
+                              key={submenu.id}
                               title={<span><UserOutlined/><span>{ submenu.title }</span></span>}
                             >
                                 { this.createSubMenu(submenu) }
