@@ -26,9 +26,7 @@ interface WithLogProps {
 }
 
 function withLog(options: Partial<WithLogProps>) {
-  return <P extends {}>(
-    WrappedComponent: ComponentType<P>
-  ): ComponentClass<any> =>
+  return <P extends {}>(WrappedComponent: ComponentType<P>): ComponentClass<any> =>
     class extends Component<P> {
       componentDidMount() {
         const { time } = options

@@ -63,6 +63,13 @@ const menus = [
             },
             {
                 id: 'xxxxxxx',
+                title: 'HOC',
+                type: 'item',
+                path: '/demo-hoc-width-auto',
+                component: lazy(() => import('../pages/DemoHOC/WidthAuth'))
+            },
+            {
+                id: 'xxxxxxx',
                 title: 'refs',
                 type: 'item',
                 path: '/demo-hoc',
