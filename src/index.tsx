@@ -5,10 +5,10 @@ import * as serviceWorker from './serviceWorker'
 import App from './App'
 import { Provider } from 'react-redux'
 import store from './store'
-import action from './store/actions/Common'
-import actions from "./store/actions/Common";
-import ajax from "./utils/ajax";
+import actions from "./store/actions/Common"
+import ajax from "./utils/ajax"
 
+/*
 type IRoute = {
   path: string,
   exact?: boolean,
@@ -17,14 +17,23 @@ type IRoute = {
   component: any,
   subRoutes?: Array<IRoute>
 }
+*/
 
-function initialApp (cb: {  (routes: any, menus: any): void }) {
+type cbType = {  (routes: any, menus: any): void }
+function initialApp (cb: cbType) {
+
   store.dispatch(actions.initial())
+
   ajax.requestMenu().then(state => {
+
     if (state) {
       const { role, routes, user, menus } = state
-      store.dispatch(action.setUser(user))
-      store.dispatch(action.setRole(role))
+
+      store.dispatch(actions.setUser(user))
+      store.dispatch(actions.setRole(role))
+
+      console.log(menus)
+
       cb(routes, menus)
     } else {
       cb([], {})
@@ -32,14 +41,16 @@ function initialApp (cb: {  (routes: any, menus: any): void }) {
   })
 }
 
+type menuType = {[propName: string]: any}
+initialApp((routes: any, menus: menuType = {}) => {
 
-initialApp((routes: any, menus: {[propName: string]: any} = {}) => {
   ReactDOM.render(
     <Provider store={store}>
-      <App routes={routes} menus={Object.values(menus)}/>
+      <App routes={routes} menus={Object.values(menus).filter(item => item.path !== '/index')}/>
     </Provider>,
     document.getElementById('root')
   );
+
 })
 
 // If you want your app to work offline and load faster, you can change

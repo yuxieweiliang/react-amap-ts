@@ -61,14 +61,17 @@ class App extends React.Component<any, AppStates> {
             component={Login}
           />
           <Route
-            key="index"
+            key="/"
             path="/"
-            render={() => {
+            render={(router) => {
 
               console.log('xxxxxxxxxxxxxxxx')
               console.log(!!this.props.isLogin, routes)
               if (!this.props.isLogin && window.location.pathname !== '/login') {
                 return <Redirect to={'/login'}/>
+              }
+              else if (window.location.pathname === '/') {
+                return <Redirect to={'/index'}/>
               }
 
               return (<div>
@@ -82,6 +85,7 @@ class App extends React.Component<any, AppStates> {
                       <Layout className="main-layout">
                         {
                           routes && !!routes.length && routesConfig.map((item: ItemType) => {
+
                             if (item.path && item.component) {
                               return (
                                 <Route
@@ -89,11 +93,13 @@ class App extends React.Component<any, AppStates> {
                                   path={item.path}
                                   component={({ location }: any) => {
                                     const Comp = item.component
+                                    console.log(cacheRoutePaths)
                                     if (cacheRoutePaths.includes(location.pathname)) {
                                       return <Comp/>
                                     } else {
                                       return <Redirect to={'/demo-Welcome'}/>
                                     }
+
                                   }}
                                 />
                               )

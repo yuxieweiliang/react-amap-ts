@@ -30,11 +30,18 @@ export function isMenu(pet: ItemType | MenuType): pet is MenuType {
 const menus = [
     /*{
         id: 'xxxsxsxxx',
-        title: 'login',
         type: 'item',
+        title: 'login',
         path: '/login',
         component: lazy(() => import('../pages/Login/Login'))
     },*/
+    {
+        id: 'xxxxxxxindex',
+        title: 'index',
+        type: 'item',
+        path: '/index',
+        component: lazy(() => import('../pages/Index/Index'))
+    },
     {
         id: 'xxxxxxx',
         title: 'Welcome',
