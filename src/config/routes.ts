@@ -1,29 +1,29 @@
 import { lazy } from 'react'
 
 export interface ItemType {
-    id: string;
-    parent?: string;
-    key?: string;
-    title?: string;
-    type: string;
-    path: string;
-    component: any;
+    id: string
+    parent?: string
+    key?: string
+    title?: string
+    type: string
+    path: string
+    component: any
 }
 export interface MenuType {
-    id: string;
-    parent?: string;
-    key?: string;
-    title: string,
-    type: string,
+    id: string
+    parent?: string
+    key?: string
+    title: string
+    type: string
     children?: ItemType[]
 }
 
 export function isItem(pet: ItemType | MenuType): pet is ItemType {
-    return (pet as ItemType).type === 'item';
+    return (pet as ItemType).type === 'item'
 }
 
 export function isMenu(pet: ItemType | MenuType): pet is MenuType {
-    return (pet as MenuType).type === 'submenu';
+    return (pet as MenuType).type === 'submenu'
 }
 
 // @ts-ignore
