@@ -1,11 +1,17 @@
-import React from 'react';
+import React from 'react'
+import { Dayjs } from 'dayjs'
+import { DatePicker, TimePicker, Calendar } from '../../components'
 import './index.scss'
+console.log(Dayjs)
 
 class Welcome extends React.Component {
   render() {
     return (
         <div className="bg-image">
-          <div className="right-top"></div>
+          <div className="right-top"/>
+            <DatePicker/>
+            <TimePicker/>
+            <Calendar/>
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
             <rect width="300" height="100"
                   style={{fill:'rgb(0,0,255)', strokeWidth:1, stroke:'rgb(0,0,0)'}}/>
@@ -23,10 +29,10 @@ class Welcome extends React.Component {
             />
           </svg>
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800" height="800">
-            <g  transform="translate(100,100)scale(0.8,0.8)">
-              <rect width="100" height="50" fill="blue"></rect>
+            <g  transform="translate(100,100) scale(0.8,0.8)">
+              <rect width="100" height="50" fill="blue"/>
             </g>
-            <rect x="50" y="50" transform="translate(200,200)scale(1.2,1.2)" width="200" height="50" fill="red" />
+            <rect x="50" y="50" transform="translate(200,200) scale(1.2,1.2)" width="200" height="50" fill="red" />
           </svg>
           <p>WelcomeABC</p>
         </div>

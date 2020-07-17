@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 import actions from "./store/actions/Common"
 import ajax from "./utils/ajax"
+import 'dayjs/locale/zh-cn'
 
 /*
 type IRoute = {

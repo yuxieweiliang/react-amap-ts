@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import { Layout, message } from 'antd';
 import { routesConfig, ItemType } from './config/routes'
-import './App.css';
+import './App.less';
 import 'antd/dist/antd.css';
 import ajax from './utils/ajax'
 import Login from './pages/Login/Login'
@@ -65,7 +65,7 @@ class App extends React.Component<any, AppStates> {
       <Provider {...stores}>
         <BrowserRouter>
 
-          
+
           <div>
             {
               (!this.state.isLogin && window.location.pathname !== '/login') ? (
